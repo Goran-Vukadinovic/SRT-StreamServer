@@ -1,2 +1,2 @@
-# SRT-StreanServer
+# SRT-StreamServer
 Secure Video Streaming

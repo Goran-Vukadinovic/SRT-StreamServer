@@ -1,0 +1,1 @@
+srt-test-multiplex -v "srt://:2000" -o "srt://:5001?id=0" "srt://:5002?id=1" "srt://:5003?id=3"

@@ -1,0 +1,1 @@
+"C:\Program Files\VideoLAN\VLC\vlc.exe" -I dummy --dummy-quiet "c:\test\test.mp3"

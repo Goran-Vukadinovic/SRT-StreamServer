@@ -1,0 +1,1 @@
+srt-live-transmit -v "udp://:9002?transtype=live&blocking=0" "udp://10.10.17.253:1234?transtype=live&blocking=0"

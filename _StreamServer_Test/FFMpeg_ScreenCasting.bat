@@ -1,0 +1,1 @@
+ffmpeg.exe -f gdigrab -rtbufsize 100M -framerate 10 -probesize 10M -draw_mouse 1 -i desktop -c:v libx264 -r 30 -preset ultrafast -tune zerolatency -crf 25 -pix_fmt yuv420p -f flv rtmp://10.10.17.251/live/test

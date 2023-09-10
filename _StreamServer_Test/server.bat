@@ -1,0 +1,1 @@
+srt-live-transmit -v "srt://:9002?transtype=live&blocking=0" "srt://:9003?transtype=live&blocking=0"

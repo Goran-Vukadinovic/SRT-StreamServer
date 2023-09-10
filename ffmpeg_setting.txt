@@ -1,0 +1,62 @@
+ffmpeg -
+re 
+-f lavfi 
+-i testsrc=size=640x360:rate=30 
+	-f lavfi 
+	-i sine 
+	-vf drawtext="text='%{localtime\:%X}':fontsize=20:fontcolor=white:x=7:y=7" 
+-vcodec libx264 
+-vb 2000k 
+-preset ultrafast 
+-x264-params keyint=60 
+-acodec aac 
+-f flv "rtmp://10.10.17.251/live/test"
+
+
+-f gdigrab 
+-rtbufsize 100M 
+-framerate 10 
+-probesize 10M 
+-draw_mouse 1 
+-i desktop 
+-c:v libx264 
+	-r 30 
+	-preset ultrafast 
+	-tune zerolatency 
+	-crf 25 
+	-pix_fmt yuv420p 
+	-f flv rtmp://10.10.17.251/live/test
+
+
+
+Example for using ddagrab with NVIDIA GPU:
+ffmpeg -f lavfi -i ddagrab -t 00:00:05 -c:v h264_nvenc -cq 18 -y output.mp4
+
+Example for using ddagrab with Intel Quick Sync:
+ffmpeg -init_hw_device qsv=hw,child_device_type=dxva2 -filter_hw_device hw -f lavfi -i ddagrab -t 00:00:05 -c:v h264_qsv -b:v 5M -y testing.mp4
+
+
+
+sudo apt install ffmpeg
+ffmpeg -follow_mouse centered -show_region 1 -video_size 854x480 -r 60 -f x11grab -i :0.0 \ 
+       -f alsa -ac 2 -i default \ 
+       -c:v libx264 -qp 0 -preset ultrafast \ 
+       "$HOME/Rec-$ (date '+%Y-%m-%d_%H.%M.%S').mp4"
+
+
+
+I used one of the following two lines to capture my Windows 7 desktop:
+
+ffmpeg -f gdigrab -framerate 25 -i desktop -vcodec libx264 -pix_fmt yuv420p -tune zerolatency -preset ultrafast -f mpegts udp://236.0.0.1:2000
+ffmpeg -y -loglevel warning -f dshow -i video="screen-capture-recorder" -framerate 25  -vcodec libx264 -pix_fmt yuv420p -tune zerolatency -preset ultrafast -f mpegts udp://236.0.0.1:2000
+
+I used the following two lines to play:
+
+mpv.exe udp://236.0.0.1:2000 --no-cache --untimed --no-demuxer-thread
+ffplay -probesize 32 -sync ext udp://236.0.0.1:2000
+
+
+
+
+
+The number of buffered frames is related to the GOP size. My program sets GOP equal to 100, and more than 20 frames are buffered as a result. In order to reduce the encoding delay, you can add two options -preset:v ultrafast and -tune:v zerolatency. For example, the following FFmpeg command line captures the image of the camera with H264 encoding and pushes it to a server address:

@@ -1,0 +1,1 @@
+srt-test-multiplex -v "srt://10.10.17.253:2000" -i "srt://:2001?id=0" "srt://:2002?id=1" "srt://:2003?id=3"

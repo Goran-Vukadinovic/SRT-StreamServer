@@ -1,0 +1,1 @@
+ffmpeg -re -f lavfi -i testsrc=size=800x600:rate=10 -f lavfi -i sine -vf drawtext="text='%{localtime\:%X}':fontsize=20:fontcolor=white:x=7:y=7" -vcodec libx264 -vb 200k -preset veryfast -x264-params keyint=60 -acodec aac -f mpegts udp://10.10.17.253:9003?pkt_size=1316&maxbw=250000

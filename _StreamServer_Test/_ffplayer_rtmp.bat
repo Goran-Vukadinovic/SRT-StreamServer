@@ -1,0 +1,1 @@
+ffplay rtmp://10.10.17.251/live/test1
